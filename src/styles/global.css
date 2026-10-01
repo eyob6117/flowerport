@@ -13,10 +13,11 @@
   --color-mist: #dfe9e3;
   --color-cream: #f8f4ec;
   --color-sand: #eee6d8;
-  --color-rose: #d8375c;
-  --color-rose-deep: #a8203f;
-  --color-blush: #f7d7de;
+  --color-rose: #b8458f;
+  --color-rose-deep: #7b2a63;
+  --color-blush: #f1d3e8;
   --color-ochre: #d6a645;
+  --color-leaf: #6fae45;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --animate-marquee: marquee 40s linear infinite;

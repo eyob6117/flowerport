@@ -1,0 +1,38 @@
+---
+import Icon from './Icon.astro';
+import { industries, groupCompanies, company } from '../data/site';
+---
+
+<section id="industries" class="relative bg-ink py-24 text-cream lg:py-32">
+  <div class="container-x">
+    <div class="max-w-3xl">
+      <p class="eyebrow text-blush" data-reveal>Industries we serve</p>
+      <h2 class="display mt-5 text-4xl leading-[1.05] sm:text-5xl" data-reveal>Built for cargo that can’t wait.</h2>
+    </div>
+    <div class="mt-16 grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 md:grid-cols-2 xl:grid-cols-4">
+      {industries.map((s, i) => (
+        <div class="group flex flex-col bg-ink p-8 transition duration-500 hover:bg-forest" data-reveal style={`--delay:${i * 80}ms`}>
+          <span class="font-display text-sm text-rose">0{i + 1}</span>
+          <h3 class="mt-10 text-2xl font-semibold">{s.title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-cream/60">{s.body}</p>
+          <ul class="mt-8 space-y-2.5 text-sm text-cream/80">
+            {s.points.map((p) => <li class="flex items-center gap-2.5"><Icon name="check" class="h-4 w-4 text-leaf" />{p}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-24 grid gap-10 rounded-3xl border border-white/10 bg-white/[0.03] p-8 sm:p-12 lg:grid-cols-12 lg:items-center" data-reveal>
+      <div class="lg:col-span-5">
+        <p class="eyebrow text-blush">Part of {company.group}</p>
+        <h3 class="display mt-4 text-3xl leading-tight sm:text-4xl">One group, connected logistics.</h3>
+        <p class="mt-4 text-sm leading-relaxed text-cream/60">Flowerport Transport is a member of {company.group}, whose companies span freight forwarding, customs clearing, logistics, automotive and trade. That gives our clients a single network from the farm to their final market.</p>
+      </div>
+      <ul class="flex flex-wrap gap-2.5 lg:col-span-6 lg:col-start-7">
+        {groupCompanies.map((c) => (
+          <li class={`rounded-full border px-4 py-2 text-sm ${c === company.name ? 'border-rose bg-rose text-white' : 'border-white/15 text-cream/75'}`}>{c}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
