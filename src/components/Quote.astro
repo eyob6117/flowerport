@@ -1,19 +1,20 @@
 ---
 import Icon from './Icon.astro';
-import { company, products } from '../data/site';
+import { company, services } from '../data/site';
 // Set PUBLIC_QUOTE_ENDPOINT (e.g. a Formspree or CRM webhook URL) to post enquiries directly.
 // Without it, the form falls back to opening a pre-filled email.
 const endpoint = import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? '';
-const volumes = ['Under 5,000 stems / week', '5,000 – 25,000 stems / week', '25,000 – 100,000 stems / week', '100,000+ stems / week'];
+const cargo = ['Flowers', 'Meat', 'Fruit & vegetables', 'Other temperature-sensitive goods', 'General distribution'];
+const frequency = ['One-off shipment', 'Weekly', 'Several times a week', 'Daily'];
 ---
 
 <section id="quote" class="grain relative overflow-hidden bg-forest py-24 text-cream lg:py-32">
   <div aria-hidden="true" class="absolute -bottom-40 -left-40 h-[600px] w-[600px] rounded-full bg-rose/20 blur-[140px]"></div>
   <div class="container-x relative grid gap-14 lg:grid-cols-12">
     <div class="lg:col-span-5">
-      <p class="eyebrow text-blush" data-reveal>Start a programme</p>
-      <h2 class="display mt-5 text-4xl leading-[1.05] sm:text-5xl" data-reveal>Tell us what you need. We’ll respond within one business day.</h2>
-      <p class="mt-6 text-cream/70" data-reveal>Our commercial team in Addis Ababa and our sales desks in Europe and the Gulf work across time zones to quote availability, pricing and landed cost.</p>
+      <p class="eyebrow text-blush" data-reveal>Book transport</p>
+      <h2 class="display mt-5 text-4xl leading-[1.05] sm:text-5xl" data-reveal>Tell us what you need to move. We’ll get back to you quickly.</h2>
+      <p class="mt-6 text-cream/70" data-reveal>Share your pickup point, destination and cargo, and our team in Addis Ababa will come back with availability and a quote.</p>
       <ul id="contact" class="mt-10 space-y-5 text-sm" data-reveal>
         <li class="flex items-center gap-4"><span class="grid h-11 w-11 place-items-center rounded-full bg-white/10"><Icon name="mail" /></span><a href={`mailto:${company.email}`} class="hover:text-blush">{company.email}</a></li>
         <li class="flex items-center gap-4"><span class="grid h-11 w-11 place-items-center rounded-full bg-white/10"><Icon name="phone" /></span><a href={`tel:${company.phone.replace(/\s/g, '')}`} class="hover:text-blush">{company.phone}</a></li>
@@ -37,30 +38,38 @@ const volumes = ['Under 5,000 stems / week', '5,000 – 25,000 stems / week', '2
             <input name="email" type="email" required autocomplete="email" class="field" placeholder="jane@company.com" />
           </label>
           <label class="block text-sm">
-            <span class="mb-2 block text-cream/70">Destination country *</span>
-            <input name="country" required autocomplete="country-name" class="field" placeholder="Netherlands" />
+            <span class="mb-2 block text-cream/70">Pickup location *</span>
+            <input name="pickup" required class="field" placeholder="Farm or facility, e.g. Holeta" />
           </label>
         </div>
         <fieldset class="mt-6">
-          <legend class="mb-3 text-sm text-cream/70">Products of interest</legend>
+          <legend class="mb-3 text-sm text-cream/70">Services needed</legend>
           <div class="flex flex-wrap gap-2">
-            {products.map((p) => (
+            {services.map((p) => (
               <label class="cursor-pointer">
-                <input type="checkbox" name="products" value={p.name} class="peer sr-only" />
-                <span class="inline-flex rounded-full border border-white/15 px-4 py-2 text-sm text-cream/75 transition peer-checked:border-rose peer-checked:bg-rose peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-rose hover:border-white/40">{p.name}</span>
+                <input type="checkbox" name="services" value={p.title} class="peer sr-only" />
+                <span class="inline-flex rounded-full border border-white/15 px-4 py-2 text-sm text-cream/75 transition peer-checked:border-rose peer-checked:bg-rose peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-rose hover:border-white/40">{p.title}</span>
               </label>
             ))}
           </div>
         </fieldset>
-        <label class="mt-6 block text-sm">
-          <span class="mb-2 block text-cream/70">Expected volume</span>
-          <select name="volume" class="field appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2024%2024%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%221.6%22%3E%3Cpath%20d=%22m6%209%206%206%206-6%22/%3E%3C/svg%3E')] bg-[length:18px] bg-[right_1rem_center] bg-no-repeat">
-            {volumes.map((v) => <option class="bg-ink">{v}</option>)}
+        <div class="mt-6 grid gap-5 sm:grid-cols-2">
+        <label class="block text-sm">
+          <span class="mb-2 block text-cream/70">Cargo type</span>
+          <select name="cargo" class="field appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2024%2024%22%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%221.6%22%3E%3Cpath%20d=%22m6%209%206%206%206-6%22/%3E%3C/svg%3E')] bg-[length:18px] bg-[right_1rem_center] bg-no-repeat">
+            {cargo.map((v) => <option class="bg-ink">{v}</option>)}
           </select>
         </label>
+        <label class="block text-sm">
+          <span class="mb-2 block text-cream/70">Frequency</span>
+          <select name="frequency" class="field appearance-none">
+            {frequency.map((v) => <option class="bg-ink">{v}</option>)}
+          </select>
+        </label>
+        </div>
         <label class="mt-6 block text-sm">
           <span class="mb-2 block text-cream/70">Message</span>
-          <textarea name="message" rows="4" class="field resize-none" placeholder="Varieties, stem lengths, packing, delivery schedule…"></textarea>
+          <textarea name="message" rows="4" class="field resize-none" placeholder="Destination (e.g. Bole cargo terminal), volume, temperature range, dates…"></textarea>
         </label>
         <div class="mt-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p class="text-xs text-cream/45">By submitting you agree to be contacted about your enquiry.</p>

@@ -1,13 +1,12 @@
 ---
-import Bloom from './Bloom.astro';
 import Icon from './Icon.astro';
 import TruckScene from './TruckScene.astro';
-import { heroStats, certifications, heroVideo } from '../data/site';
+import { heroStats, groupCompanies, heroVideo } from '../data/site';
 ---
 
 <section id="top" class="grain relative isolate overflow-hidden bg-ink pt-[76px] text-cream lg:flex lg:min-h-[max(100svh,820px)] lg:flex-col lg:pt-[112px]">
   <div aria-hidden="true" class="absolute inset-0 -z-10">
-    <div class="absolute -top-40 right-[-10%] h-[720px] w-[720px] rounded-full bg-rose/25 blur-[140px]"></div>
+    <div class="absolute -top-40 right-[-10%] h-[720px] w-[720px] rounded-full bg-rose/20 blur-[140px]"></div>
     <div class="absolute bottom-[-20%] left-[-10%] h-[520px] w-[520px] rounded-full bg-moss/70 blur-[120px]"></div>
     <svg class="absolute inset-0 h-full w-full opacity-[0.07]" aria-hidden="true">
       <defs><pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#fff" stroke-width="1" /></pattern></defs>
@@ -17,16 +16,16 @@ import { heroStats, certifications, heroVideo } from '../data/site';
 
   <div class="container-x grid items-center gap-14 pt-12 pb-16 lg:grid-cols-12 lg:gap-8 lg:flex-1 lg:items-start lg:pt-14 lg:pb-12">
     <div class="lg:col-span-7">
-      <p class="eyebrow text-blush" data-reveal>Grown at 2,600 m · Shipped worldwide</p>
+      <p class="eyebrow text-blush" data-reveal>Flowerport Transport · A WoubGet Holdings company</p>
       <h1 class="display mt-6 text-[clamp(2.6rem,4.6vw,4.1rem)] leading-[1.02]" data-reveal style="--delay:80ms">
-        From the Ethiopian highlands to the world’s <em class="text-rose italic">flower markets</em>, in under 48 hours.
+        Keeping Ethiopia’s perishable exports <em class="text-rose italic">fresh</em>, from farm to airport.
       </h1>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-cream/70" data-reveal style="--delay:160ms">
-        Flower Port grows, grades and exports premium roses and summer flowers for importers, auctions and retailers in 42 countries, backed by an unbroken, fully logged cold chain.
+        Temperature-controlled trucking for flower farms, meat exporters and vegetable growers, linked to a global network. We move around 60% of Ethiopia’s flower exports from the farms to the airport.
       </p>
       <div class="mt-10 flex flex-wrap gap-3" data-reveal style="--delay:240ms">
         <a href="#quote" class="btn-primary">Request a quote <Icon name="arrow" class="h-4 w-4" /></a>
-        <a href="#products" class="btn-ghost-light">Explore our flowers</a>
+        <a href="#services" class="btn-ghost-light">Our services</a>
       </div>
       <dl class="mt-12 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-8" data-reveal style="--delay:320ms">
         {heroStats.map((s) => (
@@ -51,12 +50,12 @@ import { heroStats, certifications, heroVideo } from '../data/site';
 
   <div class="relative mt-auto border-t border-white/10 bg-ink py-6">
     <div class="container-x flex items-center gap-8">
-      <p class="hidden shrink-0 text-xs font-medium tracking-[0.14em] text-cream/45 uppercase md:block">Certified & audited</p>
+      <p class="hidden shrink-0 text-xs font-medium tracking-[0.14em] text-cream/45 uppercase md:block">WoubGet Holdings</p>
       <div class="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
         <ul class="flex w-max animate-marquee gap-12 pr-12 text-sm font-semibold tracking-wide text-cream/65">
-          {[...certifications, ...certifications].map((c, i) => (
-            <li class="flex items-center gap-3 whitespace-nowrap" aria-hidden={i >= certifications.length ? 'true' : undefined}>
-              <Icon name="shield" class="h-4 w-4 text-rose" />{c}
+          {[...groupCompanies, ...groupCompanies].map((c, i) => (
+            <li class="flex items-center gap-3 whitespace-nowrap" aria-hidden={i >= groupCompanies.length ? 'true' : undefined}>
+              <span class="h-1.5 w-1.5 rounded-full bg-leaf"></span>{c}
             </li>
           ))}
         </ul>

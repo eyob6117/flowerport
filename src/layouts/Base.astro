@@ -4,8 +4,8 @@ import { company } from '../data/site';
 
 interface Props { title?: string; description?: string }
 const {
-  title = `${company.name} | Premium Ethiopian Flower Exporter`,
-  description = 'Flower Port grows and exports premium roses and summer flowers from the Ethiopian highlands to 40+ countries, with a fully monitored cold chain from farm to market in under 48 hours.',
+  title = `${company.name} | Cold-Chain Road Transport in Ethiopia`,
+  description = 'Flowerport Transport provides temperature-controlled trucking in Ethiopia for flower farms, meat exporters and vegetable growers, moving around 60% of Ethiopia’s flower exports from farm to airport.',
 } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -18,7 +18,6 @@ const jsonLd = {
   alternateName: company.name,
   url: canonical.href,
   logo: new URL(`${base}/favicon.svg`, Astro.site).href,
-  foundingDate: String(company.founded),
   address: { '@type': 'PostalAddress', addressLocality: 'Addis Ababa', addressCountry: 'ET' },
   contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: company.email, telephone: company.phone },
 };

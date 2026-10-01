@@ -1,12 +1,12 @@
-# Flower Port — corporate website
+# Flowerport Transport — corporate website
 
-Landing page for **Flower Port**, an Ethiopia-based international flower exporter. Built with [Astro](https://astro.build) and [Tailwind CSS v4](https://tailwindcss.com) as a fully static site, deployed to GitHub Pages.
+Landing page for **Flowerport Transport** (a WoubGet Holdings company), which provides temperature-controlled road transport in Ethiopia for flower farms, meat exporters and vegetable growers. Built with [Astro](https://astro.build) and [Tailwind CSS v4](https://tailwindcss.com) as a fully static site, deployed to GitHub Pages.
 
 **Live:** https://eyob6117.github.io/flowerport/
 
 ## Sections
 
-Hero with live-shipment card · About & key figures · Product portfolio · Farm-to-market cold chain · Interactive global route map · Why Ethiopia · Sustainability · Partner programmes & testimonials · Insights · Quote request form · Footer with offices.
+Hero with animated branded truck · About & key figures · Services · Farm-to-airport cold chain · Fleet monitoring · Industries & WoubGet Holdings group · Why Flowerport · Global reach map · Transport booking form · Footer.
 
 ## Develop
 
@@ -19,11 +19,11 @@ npm run preview
 
 ## Editing content
 
-Almost all copy lives in [`src/data/site.ts`](src/data/site.ts): company details, navigation, figures, products, cold-chain steps, destination hubs and transit times, testimonials and insights.
+Almost all copy lives in [`src/data/site.ts`](src/data/site.ts): company details, navigation, figures, services, cold-chain steps, industries, group companies and destination hubs.
 
-> **Placeholder content.** Figures (stems per year, hectares, staff numbers, percentages), certifications, testimonials, contact details and articles are illustrative. Replace them with verified company data before launch.
+> **Content source.** Copy is based on the Flowerport Transport company profile. Contact details, flight times and the fleet dashboard readings are illustrative placeholders; confirm them before launch.
 
-Flower artwork is drawn procedurally in SVG (`src/components/Bloom.astro`), so the site ships with no stock photography. To use real photography, drop images into `src/assets/` and swap the `<Bloom>` usages for Astro's `<Image>` component.
+The hero truck is an animated SVG (`src/components/TruckScene.astro`); set `heroVideo.src` in `site.ts` to use real fleet footage instead. The logo mark is `src/components/Mark.astro`; replace it with the official vector logo when available.
 
 The dotted world map is pre-generated from Natural Earth data; re-run `npm run map` if you change the projection in `scripts/build-map.mjs` and `src/lib/geo.ts`.
 
