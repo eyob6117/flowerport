@@ -1,0 +1,40 @@
+---
+import { stats, company, farms } from '../data/site';
+---
+
+<section id="about" class="relative py-24 lg:py-32">
+  <div class="container-x">
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow text-rose" data-reveal>Who we are</p>
+        <h2 class="display mt-5 text-4xl leading-[1.05] sm:text-5xl" data-reveal>
+          An Ethiopian grower with a <em class="italic">global</em> operating standard.
+        </h2>
+      </div>
+      <div class="space-y-6 text-lg leading-relaxed text-ink/70 lg:col-span-6 lg:col-start-7" data-reveal style="--delay:100ms">
+        <p>
+          Since {company.founded}, Flower Port has grown from a single greenhouse outside Addis Ababa into a vertically integrated exporter: six highland farms, our own grading and pack-house operations, and dedicated perishables capacity at one of Africa’s busiest cargo airports.
+        </p>
+        <p>
+          We control every step between the cut and the customer, so quality, volume and documentation stay consistent across 52 weeks, not just in peak season.
+        </p>
+        <ul class="flex flex-wrap gap-2 pt-2">
+          {farms.map((f) => (
+            <li class="rounded-full border border-ink/10 bg-white px-3.5 py-1.5 text-sm text-ink/70">{f}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <dl class="mt-20 grid gap-px overflow-hidden rounded-3xl border border-ink/8 bg-ink/8 sm:grid-cols-2 lg:grid-cols-4">
+      {stats.map((s, i) => (
+        <div class="bg-cream p-8 lg:p-10" data-reveal style={`--delay:${i * 80}ms`}>
+          <dd class="display text-5xl whitespace-nowrap text-ink xl:text-6xl">
+            <span data-count={s.value} data-decimals={s.decimals ?? 0}>{s.value.toLocaleString('en-US')}</span><span class="text-rose">{s.suffix}</span>
+          </dd>
+          <dt class="mt-4 max-w-[16rem] text-sm leading-relaxed text-ink/60">{s.label}</dt>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

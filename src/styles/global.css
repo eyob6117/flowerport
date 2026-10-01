@@ -1,0 +1,116 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/inter';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
+
+  --color-ink: #08201a;
+  --color-forest: #0f3329;
+  --color-moss: #1d4a3c;
+  --color-sage: #8fae9c;
+  --color-mist: #dfe9e3;
+  --color-cream: #f8f4ec;
+  --color-sand: #eee6d8;
+  --color-rose: #d8375c;
+  --color-rose-deep: #a8203f;
+  --color-blush: #f7d7de;
+  --color-ochre: #d6a645;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-dash: dash 3.2s linear infinite;
+
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @keyframes dash {
+    to { stroke-dashoffset: -40; }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-cream text-ink font-sans;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  ::selection {
+    @apply bg-rose text-white;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-rose;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12;
+}
+@utility eyebrow {
+  @apply inline-flex items-center gap-2 text-[0.72rem] font-semibold tracking-[0.18em] uppercase;
+  &::before {
+    content: '';
+    @apply h-px w-6 bg-current opacity-60;
+  }
+}
+@utility display {
+  @apply font-display font-normal tracking-[-0.02em];
+  font-variation-settings: 'opsz' 144, 'SOFT' 50;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-all duration-300 ease-out-expo;
+}
+@utility btn-primary {
+  @apply btn bg-rose text-white shadow-[0_10px_30px_-10px] shadow-rose/60 hover:-translate-y-0.5 hover:bg-rose-deep;
+}
+@utility btn-ghost-light {
+  @apply btn border border-white/25 text-white hover:bg-white hover:text-ink;
+}
+@utility btn-ghost {
+  @apply btn border border-ink/15 text-ink hover:border-ink hover:bg-ink hover:text-cream;
+}
+@utility card {
+  @apply rounded-3xl border border-ink/8 bg-white/70 backdrop-blur-sm;
+}
+@utility field {
+  @apply w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 transition focus:border-rose focus:bg-white/10 focus:outline-none;
+}
+
+/* Scroll-reveal: elements start hidden only when JS is available. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+  transition-delay: var(--delay, 0ms);
+}
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .js [data-reveal] { opacity: 1; transform: none; }
+}

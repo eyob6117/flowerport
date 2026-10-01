@@ -1,0 +1,95 @@
+---
+import { MAP_W, MAP_H, MAP_DOTS, project, arc } from '../lib/geo';
+import { hubs, origin, regions } from '../data/site';
+
+const o = project(origin.lon, origin.lat);
+const routes = hubs.map((h) => ({ ...h, p: project(h.lon, h.lat), d: arc(o, project(h.lon, h.lat)) }));
+---
+
+<section id="network" class="relative overflow-hidden py-24 lg:py-32">
+  <div class="container-x">
+    <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <p class="eyebrow text-rose" data-reveal>Global network</p>
+        <h2 class="display mt-5 text-4xl leading-[1.05] sm:text-5xl" data-reveal>One origin. Forty-two markets. Daily departures.</h2>
+      </div>
+      <p class="text-ink/65 lg:col-span-4 lg:col-start-9" data-reveal>From our perishables terminal at Addis Ababa Bole International we reach Europe overnight, the Gulf by breakfast and Asia and the Americas within a day.</p>
+    </div>
+
+    <div class="mt-14 flex flex-wrap gap-2" role="tablist" aria-label="Filter routes by region" data-reveal>
+      <button type="button" role="tab" aria-selected="true" data-region="all" class="region-tab">All markets</button>
+      {regions.map((r) => (
+        <button type="button" role="tab" aria-selected="false" data-region={r} class="region-tab">{r}</button>
+      ))}
+    </div>
+
+    <div class="mt-8 grid gap-6 lg:grid-cols-12">
+      <div class="relative overflow-hidden rounded-3xl bg-ink p-4 sm:p-8 lg:col-span-9" data-reveal>
+        <svg id="network-map" viewBox={`0 0 ${MAP_W} ${MAP_H}`} class="h-auto w-full" role="img" aria-label="Map of Flower Port air-freight routes from Addis Ababa to global markets">
+          <defs>
+            <linearGradient id="route" x1="0" x2="1">
+              <stop offset="0" stop-color="#d8375c" />
+              <stop offset="1" stop-color="#f7d7de" />
+            </linearGradient>
+            <radialGradient id="glow"><stop offset="0" stop-color="#d8375c" stop-opacity=".6" /><stop offset="1" stop-color="#d8375c" stop-opacity="0" /></radialGradient>
+          </defs>
+          <path d={MAP_DOTS} stroke="#8fae9c" stroke-opacity=".32" stroke-width="2.6" stroke-linecap="round" />
+          {routes.map((r) => (
+            <g class="route transition-opacity duration-500" data-region={r.region}>
+              <path d={r.d} fill="none" stroke="url(#route)" stroke-width="1.4" stroke-opacity=".9" />
+              <path d={r.d} fill="none" stroke="#fff" stroke-width="1.6" stroke-dasharray="3 37" stroke-linecap="round" class="motion-safe:animate-dash" />
+              <circle cx={r.p.x} cy={r.p.y} r="3.2" fill="#f8f4ec" />
+              {r.label && <text x={r.p.x + 6} y={r.p.y - 5} fill="#f8f4ec" fill-opacity=".75" font-size="10" font-family="Inter Variable, sans-serif" font-weight="600" letter-spacing=".08em">{r.code}</text>}
+            </g>
+          ))}
+          <circle cx={o.x} cy={o.y} r="28" fill="url(#glow)" />
+          <circle cx={o.x} cy={o.y} r="6" fill="#d8375c" stroke="#fff" stroke-width="2" />
+          <text x={o.x + 10} y={o.y + 20} fill="#fff" font-size="12" font-weight="700" font-family="Inter Variable, sans-serif" letter-spacing=".08em">ADD · ADDIS ABABA</text>
+        </svg>
+        <div class="pointer-events-none absolute bottom-5 left-5 hidden items-center sm:flex gap-4 text-[0.7rem] text-cream/60 sm:bottom-8 sm:left-8">
+          <span class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-rose ring-2 ring-white"></span>Origin hub</span>
+          <span class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cream"></span>Destination</span>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-ink/8 bg-white p-6 lg:col-span-3" data-reveal style="--delay:100ms">
+        <p class="text-xs font-semibold tracking-[0.14em] text-ink/50 uppercase">Typical transit from ADD</p>
+        <ul id="hub-list" class="mt-4 max-h-[420px] divide-y divide-ink/6 overflow-y-auto pr-1">
+          {hubs.map((h) => (
+            <li class="hub flex items-center justify-between gap-3 py-3" data-region={h.region}>
+              <div>
+                <p class="text-sm font-semibold">{h.city}</p>
+                <p class="text-xs text-ink/50">{h.country}</p>
+              </div>
+              <span class="shrink-0 rounded-full bg-mist px-2.5 py-1 text-xs font-semibold text-forest tabular-nums">{h.transit}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "../styles/global.css";
+  .region-tab {
+    @apply rounded-full border border-ink/12 px-4 py-2 text-sm font-medium text-ink/70 transition hover:border-ink/40;
+  }
+  .region-tab[aria-selected='true'] {
+    @apply border-ink bg-ink text-cream;
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.region-tab');
+  const routes = document.querySelectorAll<SVGGElement>('#network-map .route');
+  const hubs = document.querySelectorAll<HTMLLIElement>('#hub-list .hub');
+  tabs.forEach((tab) =>
+    tab.addEventListener('click', () => {
+      const region = tab.dataset.region;
+      tabs.forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+      routes.forEach((r) => (r.style.opacity = region === 'all' || r.dataset.region === region ? '1' : '0.08'));
+      hubs.forEach((h) => (h.hidden = !(region === 'all' || h.dataset.region === region)));
+    })
+  );
+</script>

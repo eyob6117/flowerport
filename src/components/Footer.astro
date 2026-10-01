@@ -1,0 +1,61 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { company, nav, certifications } from '../data/site';
+const offices = [
+  { city: 'Addis Ababa', role: 'Headquarters & export operations', tz: 'EAT · UTC+3' },
+  { city: 'Aalsmeer', role: 'European sales desk', tz: 'CET · UTC+1' },
+  { city: 'Dubai', role: 'Middle East & Asia sales', tz: 'GST · UTC+4' },
+];
+const year = new Date().getFullYear();
+---
+
+<footer class="relative overflow-hidden bg-ink text-cream">
+  <div class="container-x py-20">
+    <div class="flex flex-col justify-between gap-10 border-b border-white/10 pb-16 lg:flex-row lg:items-end">
+      <h2 class="display max-w-3xl text-5xl leading-[1] sm:text-6xl lg:text-7xl">Let’s grow your flower business <em class="text-rose italic">together.</em></h2>
+      <a href="#quote" class="btn-primary shrink-0 !px-8 !py-4 text-base">Request a quote <Icon name="arrow" class="h-5 w-5" /></a>
+    </div>
+
+    <div class="grid gap-12 pt-16 sm:grid-cols-2 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <Logo tone="light" />
+        <p class="mt-6 max-w-xs text-sm leading-relaxed text-cream/55">{company.tagline} Premium roses and summer flowers from the Ethiopian highlands, exported to 42 countries.</p>
+        <a href="#top" class="mt-6 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-cream/70 hover:bg-white hover:text-ink" aria-label="Flower Port on LinkedIn"><Icon name="linkedin" class="h-4 w-4" /></a>
+      </div>
+      <div class="lg:col-span-2">
+        <h3 class="text-xs font-semibold tracking-[0.16em] text-cream/45 uppercase">Explore</h3>
+        <ul class="mt-5 space-y-3 text-sm text-cream/75">
+          {nav.map((n) => <li><a href={n.href} class="hover:text-white">{n.label}</a></li>)}
+        </ul>
+      </div>
+      <div id="careers" class="lg:col-span-2">
+        <h3 class="text-xs font-semibold tracking-[0.16em] text-cream/45 uppercase">Company</h3>
+        <ul class="mt-5 space-y-3 text-sm text-cream/75">
+          <li><a href="#about" class="hover:text-white">About us</a></li>
+          <li><a href="#sustainability" class="hover:text-white">ESG report</a></li>
+          <li><a href={`mailto:${company.email}?subject=Careers`} class="hover:text-white">Careers</a></li>
+          <li><a href="#contact" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div class="sm:col-span-2 lg:col-span-4">
+        <h3 class="text-xs font-semibold tracking-[0.16em] text-cream/45 uppercase">Offices</h3>
+        <ul class="mt-5 space-y-4">
+          {offices.map((o) => (
+            <li class="flex items-start justify-between gap-4 border-b border-white/8 pb-4 text-sm">
+              <div><p class="font-semibold">{o.city}</p><p class="text-cream/55">{o.role}</p></div>
+              <span class="shrink-0 text-xs text-cream/40">{o.tz}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-16 flex flex-col gap-6 border-t border-white/10 pt-8 text-xs text-cream/45 lg:flex-row lg:items-center lg:justify-between">
+      <p>© {year} {company.legalName}. All rights reserved.</p>
+      <p class="flex flex-wrap gap-x-4 gap-y-1">{certifications.slice(0, 5).map((c) => <span>{c}</span>)}</p>
+      <div class="flex gap-6"><a href="#top" class="hover:text-white">Privacy</a><a href="#top" class="hover:text-white">Terms</a><a href="#top" class="hover:text-white">Cookies</a></div>
+    </div>
+  </div>
+  <p aria-hidden="true" class="pointer-events-none -mb-[0.22em] text-center font-display text-[19vw] leading-none tracking-tight text-white/[0.04] select-none">Flower Port</p>
+</footer>
