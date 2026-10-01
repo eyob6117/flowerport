@@ -174,3 +174,7 @@ export const insights = [
 ];
 
 export const farms = ['Holeta', 'Sebeta', 'Bishoftu', 'Batu (Ziway)', 'Sululta', 'Debre Birhan'];
+
+// Hero background. Leave src empty to use the animated truck scene (src/components/TruckScene.astro),
+// or point it at real drone/fleet footage, e.g. '/flowerport/hero.mp4' placed in public/.
+export const heroVideo = { src: '', poster: '' };
