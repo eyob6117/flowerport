@@ -1,0 +1,42 @@
+---
+import Icon from './Icon.astro';
+import { process } from '../data/site';
+---
+
+<section id="process" class="grain relative overflow-hidden bg-forest py-24 text-cream lg:py-32">
+  <div aria-hidden="true" class="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-sage/20 blur-[120px]"></div>
+  <div class="container-x relative">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-6">
+        <p class="eyebrow text-blush" data-reveal>Farm-to-market cold chain</p>
+        <h2 class="display mt-5 text-4xl leading-[1.05] sm:text-5xl" data-reveal>Every stem stays at 2°C, and every degree is on record.</h2>
+      </div>
+      <div class="flex flex-col justify-end gap-6 lg:col-span-5 lg:col-start-8" data-reveal>
+        <p class="text-cream/70">IoT loggers travel with every consignment. Your team sees live temperature, location and documentation in our customer portal, from the farm gate to your dock.</p>
+        <div class="flex flex-wrap gap-6 text-sm">
+          <span class="flex items-center gap-2 text-cream/80"><Icon name="thermo" class="h-5 w-5 text-rose" />Continuous temperature logging</span>
+          <span class="flex items-center gap-2 text-cream/80"><Icon name="box" class="h-5 w-5 text-rose" />Phytosanitary & CITES-ready docs</span>
+        </div>
+      </div>
+    </div>
+
+    <ol class="relative mt-16 grid gap-4 md:mt-20 md:gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 xl:gap-4">
+      <div aria-hidden="true" class="absolute top-[27px] right-6 left-6 hidden h-px bg-gradient-to-r from-rose via-white/30 to-rose xl:block"></div>
+      {process.map((s, i) => (
+        <li class="relative flex gap-4 md:block" data-reveal style={`--delay:${i * 90}ms`}>
+          <div class="relative z-10 grid h-11 w-11 shrink-0 place-items-center md:h-14 md:w-14 rounded-full border border-white/15 bg-forest font-display text-lg ring-8 ring-forest">
+            {s.step}
+          </div>
+          <div class="flex-1 rounded-2xl border md:mt-6 border-white/10 bg-white/[0.04] p-5 transition hover:border-white/25 hover:bg-white/[0.07]">
+            <div class="flex items-center justify-between text-[0.7rem] font-semibold tracking-[0.12em] uppercase">
+              <span class="text-rose">{s.time}</span>
+              <span class="flex items-center gap-1 text-cream/60"><Icon name="thermo" class="h-3.5 w-3.5" />{s.temp}</span>
+            </div>
+            <h3 class="mt-3 text-lg font-semibold">{s.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-cream/60">{s.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

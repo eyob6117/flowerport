@@ -1,0 +1,79 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { nav } from '../data/site';
+---
+
+<header id="site-header" data-state="top" class="group/h fixed inset-x-0 top-0 z-50 transition-transform duration-500 lg:data-[state=scrolled]:-translate-y-9">
+  <div class="hidden border-b border-white/10 bg-ink text-[0.72rem] text-white/60 lg:block">
+    <div class="container-x flex h-9 items-center justify-between">
+      <p class="flex items-center gap-2">
+        <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
+        Daily scheduled departures from Addis Ababa (ADD) to 40+ markets
+      </p>
+      <div class="flex items-center gap-6">
+        <a href="#insights" class="hover:text-white">Market updates</a>
+        <a href="#careers" class="hover:text-white">Careers</a>
+        <a href="#contact" class="hover:text-white">Customer portal</a>
+      </div>
+    </div>
+  </div>
+  <div class="border-b border-transparent transition-all duration-500 group-data-[state=scrolled]/h:border-ink/8 group-data-[state=scrolled]/h:bg-cream/85 group-data-[state=scrolled]/h:backdrop-blur-xl">
+    <div class="container-x flex h-[76px] items-center justify-between gap-8">
+      <a href="#top" aria-label="Flower Port home" class="relative">
+        <Logo tone="light" class="transition-opacity duration-300 group-data-[state=scrolled]/h:opacity-0" />
+        <Logo tone="dark" class="absolute inset-0 opacity-0 transition-opacity duration-300 group-data-[state=scrolled]/h:opacity-100" />
+      </a>
+      <nav aria-label="Primary" class="hidden lg:block">
+        <ul class="flex items-center gap-1 text-[0.86rem] font-medium text-white/80 group-data-[state=scrolled]/h:text-ink/75">
+          {nav.map((item) => (
+            <li>
+              <a href={item.href} class="rounded-full px-3.5 py-2 transition hover:bg-white/10 hover:text-white group-data-[state=scrolled]/h:hover:bg-ink/5 group-data-[state=scrolled]/h:hover:text-ink">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="hidden text-sm font-semibold text-white group-data-[state=scrolled]/h:text-ink sm:inline">Contact</a>
+        <a href="#quote" class="btn-primary hidden !py-2.5 sm:inline-flex">Request a quote <Icon name="arrow" class="h-4 w-4" /></a>
+        <button id="menu-open" type="button" class="grid h-11 w-11 place-items-center rounded-full border border-white/20 text-white group-data-[state=scrolled]/h:border-ink/15 group-data-[state=scrolled]/h:text-ink lg:hidden" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <Icon name="menu" />
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<dialog id="mobile-menu" class="m-0 h-dvh max-h-none w-full max-w-none bg-ink p-0 text-cream backdrop:bg-ink/60">
+  <div class="container-x flex h-[76px] items-center justify-between">
+    <Logo tone="light" />
+    <button id="menu-close" type="button" class="grid h-11 w-11 place-items-center rounded-full border border-white/20" aria-label="Close menu"><Icon name="close" /></button>
+  </div>
+  <nav aria-label="Mobile" class="container-x mt-6">
+    <ul class="divide-y divide-white/10 border-y border-white/10">
+      {nav.map((item) => (
+        <li><a href={item.href} class="flex items-center justify-between py-5 font-display text-3xl">{item.label}<Icon name="arrowUpRight" class="h-5 w-5 text-rose" /></a></li>
+      ))}
+    </ul>
+    <a href="#quote" class="btn-primary mt-8 w-full">Request a quote</a>
+  </nav>
+</dialog>
+
+<script>
+  const header = document.getElementById('site-header')!;
+  const onScroll = () => (header.dataset.state = window.scrollY > 40 ? 'scrolled' : 'top');
+  onScroll();
+  addEventListener('scroll', onScroll, { passive: true });
+
+  const dialog = document.getElementById('mobile-menu') as HTMLDialogElement;
+  const openBtn = document.getElementById('menu-open')!;
+  openBtn.addEventListener('click', () => {
+    dialog.showModal();
+    openBtn.setAttribute('aria-expanded', 'true');
+  });
+  document.getElementById('menu-close')!.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => openBtn.setAttribute('aria-expanded', 'false'));
+  dialog.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => dialog.close()));
+</script>
